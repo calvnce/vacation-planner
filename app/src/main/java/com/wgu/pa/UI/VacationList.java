@@ -1,13 +1,14 @@
 package com.wgu.pa.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,15 +18,12 @@ import com.wgu.pa.database.Repository;
 import com.wgu.pa.entities.Excursion;
 import com.wgu.pa.entities.Vacation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class VacationList extends AppCompatActivity {
     private Repository repository;
+    private VacationAdapter vacationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class VacationList extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         repository = new Repository(getApplication());
         List<Vacation> allVacations = repository.getmAllVacations();
-        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        vacationAdapter = new VacationAdapter(this);
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setVacations(allVacations);
@@ -56,6 +54,10 @@ public class VacationList extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_vacation_list, menu);
+
+        // Perform search
+        search(menu);
+
         return true;
     }
 
@@ -65,7 +67,7 @@ public class VacationList extends AppCompatActivity {
         super.onResume();
         List<Vacation> allVacations = repository.getmAllVacations();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        vacationAdapter = new VacationAdapter(this);
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setVacations(allVacations);
@@ -95,5 +97,41 @@ public class VacationList extends AppCompatActivity {
         }
 
         return true;
+    }
+    private  void search(Menu menu){
+        // Setup SearchView
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterVacations(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterVacations(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterVacations(String query) {
+        List<Vacation> vacations = repository.getmAllVacations();
+        List<Vacation> filteredList = new ArrayList<>();
+
+        // Filter Vacation by matching query with title, hotel, or date
+        for (Vacation vacation : vacations) {
+            if (vacation.getVacationTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    vacation.getVacationHotel().toLowerCase().contains(query.toLowerCase()) ||
+                    vacation.getStartDate().toLowerCase().contains(query.toLowerCase()) ||
+                    vacation.getEndDate().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(vacation);
+            }
+        }
+
+        // Update the RecyclerView with filtered results
+        vacationAdapter.setVacations(filteredList);
     }
 }

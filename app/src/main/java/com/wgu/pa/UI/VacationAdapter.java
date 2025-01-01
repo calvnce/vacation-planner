@@ -59,21 +59,21 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
 
     @Override
     public void onBindViewHolder(@NonNull VacationAdapter.VacationViewHolder holder, int position) {
-        if (mVacations != null) {
+        if (mVacations != null && !mVacations.isEmpty()) {
             Vacation current = mVacations.get(position);
             String title = current.getVacationTitle();
             holder.vacationItemView.setText(title);
         } else {
-            holder.vacationItemView.setText("No vacation title");
+            holder.vacationItemView.setText(context.getString(R.string.no_results_found));
         }
     }
 
     @Override
     public int getItemCount() {
-        if (mVacations != null) {
+        if (mVacations != null && !mVacations.isEmpty()) {
             return mVacations.size();
         } else {
-            return 0;
+            return 1;
         }
     }
 
