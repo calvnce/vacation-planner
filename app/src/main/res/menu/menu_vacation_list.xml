@@ -11,6 +11,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:id="@+id/mysample"
         android:title="@string/add_sample_data"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/myreport"
+        android:title="@string/generate_report"
+        app:showAsAction="never" />
+
 </menu>
 
 <!--<menu xmlns:app="http://schemas.android.com/apk/res-auto"-->

@@ -5,18 +5,21 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.wgu.pa.R;
 import com.wgu.pa.database.Repository;
 import com.wgu.pa.entities.Excursion;
 import com.wgu.pa.entities.Vacation;
+import com.wgu.pa.service.ReportGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +85,22 @@ public class VacationList extends AppCompatActivity {
             return true;
         }
 
+        // Generate report
+        if (item.getItemId() == R.id.myreport) {
+            List<Vacation> vacations = repository.getmAllVacations();
+            if (vacations==null || vacations.isEmpty()){
+                Toast.makeText(this, "No records to report", Toast.LENGTH_LONG).show();
+            }else {
+                List<Excursion> excursions = repository.getmAllExcursions();
+                String title = "Vacation and Excursions Report";
+                // Handle the report generation
+                String path = ReportGenerator.generateReport(this, title, vacations, excursions);
+                // Show a Toast notification
+                Toast.makeText(this, path, Toast.LENGTH_LONG).show();
+            }
+            return true;
+        }
+
         //manually adds sample vacations and excursions to db when user clicks My Sample
         if (item.getItemId() == R.id.mysample) {
             repository = new Repository(getApplication());
@@ -134,4 +153,6 @@ public class VacationList extends AppCompatActivity {
         // Update the RecyclerView with filtered results
         vacationAdapter.setVacations(filteredList);
     }
+
+
 }
