@@ -1,18 +1,16 @@
 package com.wgu.pa.UI;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.wgu.pa.R;
@@ -88,9 +86,9 @@ public class VacationList extends AppCompatActivity {
         // Generate report
         if (item.getItemId() == R.id.myreport) {
             List<Vacation> vacations = repository.getmAllVacations();
-            if (vacations==null || vacations.isEmpty()){
+            if (vacations == null || vacations.isEmpty()) {
                 Toast.makeText(this, "No records to report", Toast.LENGTH_LONG).show();
-            }else {
+            } else {
                 List<Excursion> excursions = repository.getmAllExcursions();
                 String title = "Vacation and Excursions Report";
                 // Handle the report generation
@@ -112,12 +110,16 @@ public class VacationList extends AppCompatActivity {
             repository.insert(excursion);
             excursion = new Excursion(0, "Wine Tasting", 1, "12/30/24");
             repository.insert(excursion);
+
+            // Refresh RecyclerView
+            updateVacationListView();
             return true;
         }
 
         return true;
     }
-    private  void search(Menu menu){
+
+    private void search(Menu menu) {
         // Setup SearchView
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -154,5 +156,9 @@ public class VacationList extends AppCompatActivity {
         vacationAdapter.setVacations(filteredList);
     }
 
-
+    private void updateVacationListView() {
+        List<Vacation> allVacations = repository.getmAllVacations();
+        // Update the RecyclerView with loaded results
+        vacationAdapter.setVacations(allVacations);
+    }
 }
