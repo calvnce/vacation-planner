@@ -17,37 +17,13 @@ import java.util.List;
 
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
 
-    private List<Vacation> mVacations;
     private final Context context;
     private final LayoutInflater mInflater;
+    private List<Vacation> mVacations;
 
     public VacationAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
-    }
-
-    //sets up the RecyclerView list
-    public class VacationViewHolder extends RecyclerView.ViewHolder {
-        private final TextView vacationItemView;
-
-        public VacationViewHolder(@NonNull View itemView) {
-            super(itemView);
-            vacationItemView = itemView.findViewById(R.id.textView2); //vacation list item
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final Vacation current = mVacations.get(position);
-                    Intent intent = new Intent(context, VacationDetails.class);
-                    intent.putExtra("id", current.getVacationId());
-                    intent.putExtra("title", current.getVacationTitle());
-                    intent.putExtra("hotel", current.getVacationHotel());
-                    intent.putExtra("startdate", current.getStartDate());
-                    intent.putExtra("enddate", current.getEndDate());
-                    context.startActivity(intent);
-                }
-            });
-        }
     }
 
     @NonNull
@@ -80,5 +56,29 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
     public void setVacations(List<Vacation> vacations) {
         mVacations = vacations;
         notifyDataSetChanged();
+    }
+
+    //sets up the RecyclerView list
+    public class VacationViewHolder extends RecyclerView.ViewHolder {
+        private final TextView vacationItemView;
+
+        public VacationViewHolder(@NonNull View itemView) {
+            super(itemView);
+            vacationItemView = itemView.findViewById(R.id.textView2); //vacation list item
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    final Vacation current = mVacations.get(position);
+                    Intent intent = new Intent(context, VacationDetails.class);
+                    intent.putExtra("id", current.getVacationId());
+                    intent.putExtra("title", current.getVacationTitle());
+                    intent.putExtra("hotel", current.getVacationHotel());
+                    intent.putExtra("startdate", current.getStartDate());
+                    intent.putExtra("enddate", current.getEndDate());
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 }

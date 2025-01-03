@@ -34,6 +34,12 @@
             android:exported="false"
             android:label="Vacation List"
             android:parentActivityName=".UI.MainActivity" />
+
+        <activity
+            android:name=".UI.ReportActivity"
+            android:exported="false"
+            android:label="Vacation Report List"
+            android:parentActivityName=".UI.MainActivity" />
         <activity
             android:name=".UI.MainActivity"
             android:exported="true"

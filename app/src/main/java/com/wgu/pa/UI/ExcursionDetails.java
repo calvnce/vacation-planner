@@ -1,9 +1,5 @@
 package com.wgu.pa.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -18,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.wgu.pa.R;
 import com.wgu.pa.database.Repository;
 import com.wgu.pa.entities.Excursion;
@@ -25,7 +23,6 @@ import com.wgu.pa.entities.Vacation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +30,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class ExcursionDetails extends AppCompatActivity {
+    final Calendar myCalendarDate = Calendar.getInstance();
     String title;
     int excursionID;
     int vacationID;
@@ -41,8 +39,6 @@ public class ExcursionDetails extends AppCompatActivity {
     Excursion currentExcursion;
     TextView editExcursionDate;
     DatePickerDialog.OnDateSetListener excursionDate;
-    final Calendar myCalendarDate = Calendar.getInstance();
-
     String setDate;
 
     Random rand = new Random();
@@ -154,7 +150,8 @@ public class ExcursionDetails extends AppCompatActivity {
                         //if the excursion list is empty, make this excursion its first excursion
                         if (repository.getmAllExcursions().size() == 0) excursionID = 1;
                             //else make this excursion the last in the list
-                        else excursionID = repository.getmAllExcursions().get(repository.getmAllExcursions().size() - 1).getExcursionID() + 1;
+                        else
+                            excursionID = repository.getmAllExcursions().get(repository.getmAllExcursions().size() - 1).getExcursionID() + 1;
                         excursion = new Excursion(excursionID, editTitle.getText().toString(), vacationID, excursionDateString);
                         repository.insert(excursion);
                         this.finish();

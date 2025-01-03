@@ -12,14 +12,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Repository {
-    private ExcursionDAO mExcursionDAO;
-    private VacationDAO mVacationDAO;
-
-    private List<Vacation> mAllVacations;
-    private List<Excursion> mAllExcursions;
-
     private static int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private ExcursionDAO mExcursionDAO;
+    private VacationDAO mVacationDAO;
+    private List<Vacation> mAllVacations;
+    private List<Excursion> mAllExcursions;
 
     public Repository(Application application) {
         VacationDatabaseBuilder db = VacationDatabaseBuilder.getDatabase(application);
@@ -33,23 +31,23 @@ public class Repository {
             mAllVacations = mVacationDAO.getAllVacations();
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return mAllVacations;
     }
 
     //creates vacation creation method
-    public void insert (Vacation vacation) {
+    public void insert(Vacation vacation) {
         databaseExecutor.execute(() -> {
             mVacationDAO.insert(vacation);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -60,9 +58,9 @@ public class Repository {
             mVacationDAO.update(vacation);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -73,9 +71,9 @@ public class Repository {
             mVacationDAO.delete(vacation);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -86,9 +84,9 @@ public class Repository {
             mAllExcursions = mExcursionDAO.getAllExcursions();
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return mAllExcursions;
@@ -100,9 +98,9 @@ public class Repository {
             mAllExcursions = mExcursionDAO.getAssociatedExcursions(vacationID);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return mAllExcursions;
@@ -114,9 +112,9 @@ public class Repository {
             mExcursionDAO.insert(excursion);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -127,9 +125,9 @@ public class Repository {
             mExcursionDAO.update(excursion);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -140,9 +138,9 @@ public class Repository {
             mExcursionDAO.delete(excursion);
         });
         // if it was synchronous, you don't need this sleep test
-        try{
+        try {
             Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

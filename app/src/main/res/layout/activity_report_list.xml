@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:divider="?android:attr/dividerVertical"
+        android:showDividers="middle">
+
+        <TableRow>
+            <TextView
+                android:text="Title"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+            <TextView
+                android:text="Hotel"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+            <TextView
+                android:text="Start Date"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+            <TextView
+                android:text="End Date"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/vacationTitle"
+                android:padding="4dp"/>
+            <TextView
+                android:id="@+id/vacationHotel"
+                android:padding="4dp"/>
+            <TextView
+                android:id="@+id/startDate"
+                android:padding="4dp"/>
+            <TextView
+                android:id="@+id/endDate"
+                android:padding="4dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:text="Excursions:"
+        android:paddingTop="8dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:id="@+id/excursionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"/>
+</LinearLayout>

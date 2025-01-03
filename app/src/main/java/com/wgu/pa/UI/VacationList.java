@@ -77,38 +77,63 @@ public class VacationList extends AppCompatActivity {
     //define what will happen when a menu item is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //takes user back to home
+        // Takes user back to home
         if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
         }
 
-        // Generate report
+        // Navigate to Reports page
         if (item.getItemId() == R.id.myreport) {
-            List<Vacation> vacations = repository.getmAllVacations();
-            if (vacations == null || vacations.isEmpty()) {
-                Toast.makeText(this, "No records to report", Toast.LENGTH_LONG).show();
-            } else {
-                List<Excursion> excursions = repository.getmAllExcursions();
-                String title = "Vacation and Excursions Report";
-                // Handle the report generation
-                String path = ReportGenerator.generateReport(this, title, vacations, excursions);
-                // Show a Toast notification
-                Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-            }
+            Intent intent = new Intent(this, ReportActivity.class);
+            startActivity(intent);
             return true;
         }
 
         //manually adds sample vacations and excursions to db when user clicks My Sample
         if (item.getItemId() == R.id.mysample) {
             repository = new Repository(getApplication());
+
+            // Insert vacations
             Vacation vacation = new Vacation(0, "Panama", "Marriott", "12/30/24", "12/31/24");
             repository.insert(vacation);
             vacation = new Vacation(0, "China", "Hilton", "12/30/24", "12/30/24");
             repository.insert(vacation);
+            vacation = new Vacation(0, "Japan", "Ritz-Carlton", "01/05/25", "01/10/25");
+            repository.insert(vacation);
+            vacation = new Vacation(0, "Italy", "Four Seasons", "02/14/25", "02/20/25");
+            repository.insert(vacation);
+            vacation = new Vacation(0, "Mexico", "Hyatt", "03/01/25", "03/05/25");
+            repository.insert(vacation);
+            vacation = new Vacation(0, "Australia", "InterContinental", "04/10/25", "04/15/25");
+            repository.insert(vacation);
+            vacation = new Vacation(0, "Canada", "Fairmont", "05/20/25", "05/25/25");
+            repository.insert(vacation);
+
+            // Insert corresponding excursions
             Excursion excursion = new Excursion(0, "Cycling", 1, "12/30/24");
             repository.insert(excursion);
-            excursion = new Excursion(0, "Wine Tasting", 1, "12/30/24");
+            excursion = new Excursion(0, "Wine Tasting", 2, "12/30/24");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Cherry Blossom Viewing", 3, "01/06/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Temple Visit", 3, "01/07/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Gondola Ride", 4, "02/15/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Cooking Class", 4, "02/16/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Tequila Tasting", 5, "03/02/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Beach Volleyball", 5, "03/03/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Great Barrier Reef Diving", 6, "04/11/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Wildlife Safari", 6, "04/12/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Niagara Falls Tour", 7, "05/21/25");
+            repository.insert(excursion);
+            excursion = new Excursion(0, "Museum Tour", 7, "05/22/25");
             repository.insert(excursion);
 
             // Refresh RecyclerView

@@ -1,21 +1,25 @@
 package com.wgu.pa;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Context;
 import android.os.Environment;
 
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.wgu.pa.entities.Excursion;
 import com.wgu.pa.entities.Vacation;
 import com.wgu.pa.service.ReportGenerator;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,19 +33,18 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ReportGeneratorTest {
     private Context context;
+
     @Before
     public void setUp() {
         context = ApplicationProvider.getApplicationContext();
     }
+
     @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.wgu.pa", appContext.getPackageName());
     }
-
-
-
 
 
     @Test

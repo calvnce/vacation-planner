@@ -1,18 +1,11 @@
 package com.wgu.pa.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +13,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.wgu.pa.R;
@@ -38,12 +35,13 @@ import java.util.Random;
 
 public class VacationDetails extends AppCompatActivity {
 
+    final Calendar myCalendarStart = Calendar.getInstance();
+    final Calendar myCalendarEnd = Calendar.getInstance();
     String title;
     String hotel;
     int vacationID;
     String setStartDate;
     String setEndDate;
-
     EditText editTitle;
     EditText editHotel;
     TextView editStartDate;
@@ -53,9 +51,6 @@ public class VacationDetails extends AppCompatActivity {
     int numExcursions;
     DatePickerDialog.OnDateSetListener startDate;
     DatePickerDialog.OnDateSetListener endDate;
-    final Calendar myCalendarStart = Calendar.getInstance();
-    final Calendar myCalendarEnd = Calendar.getInstance();
-
     List<Excursion> filteredExcursions = new ArrayList<>();
 
     Random rand = new Random();
@@ -97,7 +92,7 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        for (Excursion e: repository.getmAllExcursions()) {
+        for (Excursion e : repository.getmAllExcursions()) {
             if (e.getVacationID() == vacationID) filteredExcursions.add(e);
         }
         excursionAdapter.setmExcursions(filteredExcursions);
@@ -221,8 +216,9 @@ public class VacationDetails extends AppCompatActivity {
                     if (vacationID == -1) {
                         //if the vacation list is empty, make this vacation its first vacation
                         if (repository.getmAllVacations().size() == 0) vacationID = 1;
-                        //else make this vacation the last in the list
-                        else vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() - 1).getVacationId() + 1;
+                            //else make this vacation the last in the list
+                        else
+                            vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() - 1).getVacationId() + 1;
                         vacation = new Vacation(vacationID, editTitle.getText().toString(), editHotel.getText().toString(), startDateString, endDateString);
                         repository.insert(vacation);
                         this.finish();
@@ -345,7 +341,7 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Excursion> filteredExcursions = new ArrayList<>();
-        for (Excursion e: repository.getmAllExcursions()) {
+        for (Excursion e : repository.getmAllExcursions()) {
             if (e.getVacationID() == vacationID) filteredExcursions.add(e);
         }
         excursionAdapter.setmExcursions(filteredExcursions);

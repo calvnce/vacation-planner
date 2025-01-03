@@ -14,8 +14,6 @@ import com.wgu.pa.entities.Vacation;
 @Database(entities = {Vacation.class, Excursion.class}, version = 1, exportSchema = false)
 public abstract class VacationDatabaseBuilder extends RoomDatabase {
 
-    public abstract VacationDAO vacationDAO();
-    public abstract ExcursionDAO excursionDAO();
     private static volatile VacationDatabaseBuilder INSTANCE;
 
     // determines asynchronous database
@@ -33,4 +31,8 @@ public abstract class VacationDatabaseBuilder extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract VacationDAO vacationDAO();
+
+    public abstract ExcursionDAO excursionDAO();
 }

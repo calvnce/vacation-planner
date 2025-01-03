@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat;
 import com.wgu.pa.R;
 
 public class MyReceiver extends BroadcastReceiver {
-    String channel_id = "test";
     static int notificationID;
+    String channel_id = "test";
 
     //sets up alert system
     @Override
